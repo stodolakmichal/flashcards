@@ -33,8 +33,8 @@ class Words:
 
 
 class Json_Operations:
-    def __init__(self, path_to_json_file=os.path.join(os.getcwd(), "dictionaries", "default_dictionary.json")):
-        self.path = path_to_json_file
+    def __init__(self, category_file="default_dictionary.json"):
+        self.path = os.path.join(os.getcwd(), "dictionaries", category_file)
         self.json_file = self.getParsedDataFromJsonFile()
 
     def getParsedDataFromJsonFile(self):
@@ -64,14 +64,38 @@ class Json_Operations:
         file.close()
 
 
-def show_menu(dictionary_json=None, new_words=None):
+def choose_category():
+    while True:
+        path_to_json_file = os.path.join(os.getcwd(), "dictionaries")
+        categories = os.listdir(path_to_json_file)
+        category_json_files_without_extensions = [os.path.splitext(file)[0] for file in categories]
+        for index in range(len(category_json_files_without_extensions)):
+            print(f"{index + 1}. {category_json_files_without_extensions[index]}")
+        print(f"0. Dodaj kategorię")
+        print(f"X. Zakończ naukę")
+        category_input = input("Wybierz kategorię: ")
+
+        if "1" <= category_input <= f"{len(categories)}":
+            dictionary_json = Json_Operations(categories[int(category_input) - 1])
+            new_words = Words(dictionary_json.json_file)
+            category_menu(new_words, dictionary_json)
+        elif category_input == "0":
+            new_category_name = input("Podaj nazwę kategorii: ")
+            Json_Operations(f"{new_category_name}.json")
+        elif category_input.lower() == "x":
+            print("Nauka zakończona")
+            break
+        else:
+            print("\033[91mNieprawidłowy wybór. Spróbuj ponownie!\033[0m")
+
+
+def category_menu(new_words, dictionary_json):
     while True:
         print(
             f'''1. Wyswietl dostepne slowa
 2. Testuj swoja wiedze
 3. Dodaj nowe słowo i tłumaczenie
-4. Dodaj nową kategorię
-X. Zamknij program''')
+X. Zmień kategorię''')
         user_input = input("Podaj co chcesz zrobić: ")
         if user_input == "1":
             new_words.displayWords()
@@ -79,18 +103,11 @@ X. Zamknij program''')
             new_words.testKnowledge()
         elif user_input == "3":
             dictionary_json.addNewWordAndTranslationToJson()
-        elif user_input == "4":
-            new_category_name = input("Podaj nazwę kategorii: ")
-            Json_Operations(os.path.join(os.getcwd(), "dictionaries", f"{new_category_name}.json"))
-            pass
         elif user_input.lower() == "x":
-            print("Program zakończony")
             break
         else:
             print("\033[91mNieprawidłowy wybór. Spróbuj ponownie!\033[0m")
 
 
 if __name__ == "__main__":
-    dictionary_json = Json_Operations()
-    new_words = Words(dictionary_json.json_file)
-    show_menu(dictionary_json, new_words)
+    choose_category()
