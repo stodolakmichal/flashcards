@@ -1,4 +1,4 @@
-Lib/
-.idea/
-Scripts/
+.git
+venv
 pyvenv.cfg
+.idea
