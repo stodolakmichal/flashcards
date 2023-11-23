@@ -13,18 +13,26 @@ def test_displayWords(words_instance, capsys):
 
 
 def test_testKnowledge_CorrectAnswerInfoMessage(words_instance, patched_json, capsys):
-    expected_output2 = "\x1b[92mPoprawnie!\x1b[0m\n"
+    expected_output = "Poprawnie!\n"
     with patch("builtins.input", return_value=f"{patched_json['ciao']}"):
         words_instance.testKnowledge()
-    captured_output2 = capsys.readouterr().out
-    assert expected_output2 == captured_output2
+    captured_output = capsys.readouterr().out
+    assert expected_output == captured_output
 
 
 def test_testKnowledge_WrongAnswerInfoMessage(words_instance, patched_json, capsys):
-    expected_output2 = f"\x1b[91mŹle! Poprawnie: ciao - {patched_json['ciao']}\x1b[0m\n\033[92mPoprawnie!\033[0m".strip()
+    expected_output = f"Źle! Poprawnie: ciao - {patched_json['ciao']}\nPoprawnie!".strip()
     with patch("builtins.input", side_effect=["wrong_answer", f"{patched_json['ciao']}"]):
         words_instance.testKnowledge()
-    captured_output2 = capsys.readouterr().out.strip()
-    assert expected_output2 == captured_output2
+    captured_output = capsys.readouterr().out.strip()
+    assert expected_output == captured_output
 
 
+def test_testKnowledge_WrongAnswer10Times(words_instance, capsys):
+    expected_output = "Odpowiedziałeś 10 razy źle! Zacznij do nowa!"
+    with patch("builtins.input", side_effect=["words_for_test"] * 10):
+        words_instance.testKnowledge()
+    captured_output = capsys.readouterr().out.strip()
+    last_new_line = captured_output.rfind("\n")
+    last_print = captured_output[last_new_line + 1:]
+    assert expected_output == last_print

@@ -25,13 +25,10 @@ class FakeFile:
 def test_getParsedDataFromJsonFile_file_exists(patched_json):
     with patch("builtins.open", return_value=FakeFile(patched_json)):
         json_operations = Json_Operations()
-
     assert json_operations.json_file == patched_json
 
 
 def test_getParsedDataFromJsonFile_file_not_exist():
     with patch("builtins.open", side_effect=[FileNotFoundError, FakeFile({})]):
         json_operations = Json_Operations()
-
     assert json_operations.json_file == {}
-

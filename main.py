@@ -24,14 +24,14 @@ class Words:
             random_translation = words_copy[random_word]
             user_input = input(f"{random_word} - ")
             if user_input == f"{random_translation}":
-                print("\033[92mPoprawnie!\033[0m")
+                print("Poprawnie!")
                 counter -= 1
                 del words_copy[random_word]
             else:
-                print(f"\033[91mŹle! Poprawnie: {random_word} - {random_translation}\033[0m")
+                print(f"Źle! Poprawnie: {random_word} - {random_translation}")
                 wrong_answers_counter += 1
-                if wrong_answers_counter == 10:
-                    print("\033[91mOdpowiedziałeś 10 razy źle! Zacznij do nowa!\033[0m")
+        if wrong_answers_counter == 10:
+            print("Odpowiedziałeś 10 razy źle! Zacznij do nowa!")
 
 
 
