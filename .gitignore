@@ -2,3 +2,4 @@
 venv
 pyvenv.cfg
 .idea
+__pycache__

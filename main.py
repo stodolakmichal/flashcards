@@ -19,7 +19,7 @@ class Words:
         wrong_answers_counter = 0
         words_copy = dict(self.words)
 
-        while counter != 0:
+        while counter != 0 and wrong_answers_counter <= 9:
             random_word = random.choice(list(words_copy.keys()))
             random_translation = words_copy[random_word]
             user_input = input(f"{random_word} - ")
@@ -30,6 +30,9 @@ class Words:
             else:
                 print(f"\033[91mŹle! Poprawnie: {random_word} - {random_translation}\033[0m")
                 wrong_answers_counter += 1
+                if wrong_answers_counter == 10:
+                    print("\033[91mOdpowiedziałeś 10 razy źle! Zacznij do nowa!\033[0m")
+
 
 
 class Json_Operations:
@@ -43,7 +46,8 @@ class Json_Operations:
                 return json.load(file)
         except FileNotFoundError:
             with open(self.path, "w") as file:
-                return json.dump({}, file, indent=2)
+                json.dump({}, file, indent=2)
+                return {}
 
     def getWordsToBeAdded(self):
         while True:
