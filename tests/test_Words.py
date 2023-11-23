@@ -19,10 +19,12 @@ def test_testKnowledge_CorrectAnswerInfoMessage(words_instance, patched_json, ca
     captured_output2 = capsys.readouterr().out
     assert expected_output2 == captured_output2
 
-#TODO Dokonczyc wrong answer info message
+
 def test_testKnowledge_WrongAnswerInfoMessage(words_instance, patched_json, capsys):
-    expected_output2 = f"\x1b[91mŹle! Poprawnie: ciao - f{patched_json['ciao']}!\x1b[0m\n".strip()
+    expected_output2 = f"\x1b[91mŹle! Poprawnie: ciao - {patched_json['ciao']}\x1b[0m\n\033[92mPoprawnie!\033[0m".strip()
     with patch("builtins.input", side_effect=["wrong_answer", f"{patched_json['ciao']}"]):
         words_instance.testKnowledge()
     captured_output2 = capsys.readouterr().out.strip()
     assert expected_output2 == captured_output2
+
+
