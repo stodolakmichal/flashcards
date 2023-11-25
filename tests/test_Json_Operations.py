@@ -1,5 +1,4 @@
 import json
-
 from main import Json_Operations
 from unittest.mock import patch
 
@@ -40,3 +39,8 @@ def test_getWordsToBeAdded(Json_Operations_instance):
     with patch('builtins.input', side_effect=["bella", "piekna", "exit"]):
         Json_Operations_instance.getWordsToBeAdded()
     assert Json_Operations_instance.json_file["bella"] == "piekna"
+
+
+def test_getWordsToBeAdded_exit(Json_Operations_instance):
+    with patch('builtins.input', side_effect=["exit"]):
+        Json_Operations_instance.getWordsToBeAdded()
