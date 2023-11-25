@@ -65,7 +65,7 @@ class Json_Operations:
                 json.dump(self.json_file, file, indent=2)
             print("Nowe słowa zostały dodane do pliku json")
         except FileNotFoundError:
-            print(f"Plik {self.path} nie istnieje.")
+            print(f"Plik {self.path} nie istnieje!")
         file.close()
 
 
