@@ -1,4 +1,7 @@
 import json
+
+import pytest
+
 from main import Json_Operations
 from unittest.mock import patch
 
@@ -35,10 +38,16 @@ def test_getParsedDataFromJsonFile_file_not_exist():
     assert json_operations.json_file == {}
 
 
-def test_getWordsToBeAdded(Json_Operations_instance):
-    with patch('builtins.input', side_effect=["bella", "piekna", "exit"]):
+@pytest.mark.parametrize("side_effects",
+                         [("1st_word", "1st_translation", "exit"),
+                          ("1st_word", "1st_translation", "2nd_word", "2nd_translation", "exit"),
+                          ("1st_word", "1st_translation", "2nd_word", "2nd_translation", "3rd_word", "3rd_translation",
+                           "exit")])
+def test_getWordsToBeAdded(Json_Operations_instance, side_effects):
+    with patch('builtins.input', side_effect=side_effects):
         Json_Operations_instance.getWordsToBeAdded()
-    assert Json_Operations_instance.json_file["bella"] == "piekna"
+    for index in range(0, len(side_effects) - 1, 2):
+        assert Json_Operations_instance.json_file[side_effects[index]] == side_effects[index + 1]
 
 
 def test_getWordsToBeAdded_exit(Json_Operations_instance):
