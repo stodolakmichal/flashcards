@@ -13,5 +13,5 @@ def patched_json():
 
 @pytest.fixture
 def words_instance(patched_json):
-    with patch("main.open", return_value=StringIO()) as mock_open:
+    with patch("main.open", return_value=StringIO()):
         yield Words(patched_json)

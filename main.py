@@ -1,7 +1,6 @@
 import json
 import random
 import os
-import logging
 
 
 class Words:
@@ -14,8 +13,10 @@ class Words:
             print(f"{word} - {translation}")
 
     def testKnowledge(self):
-        """Opcja 2 - Sprawdzanie wiedzy. Jesli odpowiedz jest poprawna, zmniejsza się counter i slowo jest usuwane ze slownika
-                     Jesli odpowiedz jest niepoprawna, powtarzamy wyswietlanie pytania"""
+        """Opcja 2 - Sprawdzanie wiedzy.
+        Jesli odpowiedz jest poprawna, zmniejsza się counter i slowo jest usuwane ze slownika
+        Jesli odpowiedz jest niepoprawna, powtarzamy wyswietlanie pytania
+        """
         counter = len(self.words)
         wrong_answers_counter = 0
         words_copy = dict(self.words)
@@ -75,8 +76,8 @@ def choose_category():
         category_json_files_without_extensions = [os.path.splitext(file)[0] for file in categories]
         for index, category in enumerate(category_json_files_without_extensions, start=1):
             print(f"{index}. {category}")
-        print(f"0. Dodaj kategorię")
-        print(f"X. Zakończ naukę")
+        print("0. Dodaj kategorię")
+        print("X. Zakończ naukę")
         category_input = input("Wybierz kategorię: ")
 
         if "1" <= category_input <= f"{len(categories)}":
@@ -96,7 +97,7 @@ def choose_category():
 def category_menu(new_words, dictionary_json):
     while True:
         print(
-            f'''1. Wyswietl dostepne slowa
+            '''1. Wyswietl dostepne slowa
 2. Testuj swoja wiedze
 3. Dodaj nowe słowo i tłumaczenie
 X. Zmień kategorię''')

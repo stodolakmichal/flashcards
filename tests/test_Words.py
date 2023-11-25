@@ -1,9 +1,5 @@
 from unittest.mock import patch
 
-import pytest
-from main import Words
-from io import StringIO
-
 
 def test_displayWords(words_instance, capsys):
     words_instance.displayWords()
