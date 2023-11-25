@@ -23,14 +23,20 @@ class FakeFile:
 
 
 def test_getParsedDataFromJsonFile_file_exists(patched_json):
-    '''Test if file exists'''
+    """ Test if file exists """
     with patch("builtins.open", return_value=FakeFile(patched_json)):
         json_operations = Json_Operations()
     assert json_operations.json_file == patched_json
 
 
 def test_getParsedDataFromJsonFile_file_not_exist():
-    '''Test if function returns {} if file not exist '''
+    """ Test if function returns {} if file not exist """
     with patch("builtins.open", side_effect=[FileNotFoundError, FakeFile({})]):
         json_operations = Json_Operations()
     assert json_operations.json_file == {}
+
+
+def test_getWordsToBeAdded(Json_Operations_instance):
+    with patch('builtins.input', side_effect=["bella", "piekna", "exit"]):
+        Json_Operations_instance.getWordsToBeAdded()
+    assert Json_Operations_instance.json_file["bella"] == "piekna"
