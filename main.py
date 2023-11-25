@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import logging
 
 
 class Words:
@@ -32,7 +33,6 @@ class Words:
                 wrong_answers_counter += 1
         if wrong_answers_counter == 10:
             print("Odpowiedziałeś 10 razy źle! Zacznij do nowa!")
-
 
 
 class Json_Operations:
@@ -73,8 +73,8 @@ def choose_category():
         path_to_json_file = os.path.join(os.getcwd(), "dictionaries")
         categories = os.listdir(path_to_json_file)
         category_json_files_without_extensions = [os.path.splitext(file)[0] for file in categories]
-        for index in range(len(category_json_files_without_extensions)):
-            print(f"{index + 1}. {category_json_files_without_extensions[index]}")
+        for index, category in enumerate(category_json_files_without_extensions, start=1):
+            print(f"{index}. {category}")
         print(f"0. Dodaj kategorię")
         print(f"X. Zakończ naukę")
         category_input = input("Wybierz kategorię: ")
