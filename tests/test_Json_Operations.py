@@ -53,3 +53,13 @@ def test_getWordsToBeAdded(Json_Operations_instance, side_effects):
 def test_getWordsToBeAdded_exit(Json_Operations_instance):
     with patch('builtins.input', side_effect=["exit"]):
         Json_Operations_instance.getWordsToBeAdded()
+
+
+def test_getWords():
+    # TODO
+    pass
+
+
+def test_updateJsonFile():
+    # TODO
+    pass

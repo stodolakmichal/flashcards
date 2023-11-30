@@ -36,7 +36,7 @@ class Tests:
             print("Odpowiedziałeś 10 razy źle! Zacznij do nowa!")
 
 
-class Json_Operations():
+class Json_Operations:
     def __init__(self, category_file="default_dictionary.json"):
         self.path = os.path.join(os.getcwd(), "dictionaries", category_file)
         self.json_file = self.getParsedDataFromJsonFile()
