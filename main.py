@@ -58,8 +58,29 @@ class Json_Operations:
             new_translation = input("Podaj tlumaczenie: ")
             self.json_file[new_word] = new_translation
 
+    def getWordsToBeDeleted(self):
+        while True:
+            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            if new_word.lower() == "exit":
+                break
+            if new_word in self.json_file:
+                del self.json_file[new_word]
+                print(f"Slowo {new_word} zostało usunięte!")
+            else:
+                print(f"Slowa {new_word} nie ma w slowniku!")
+
     def addNewWordAndTranslationToJson(self):
         self.getWordsToBeAdded()
+        try:
+            with open(self.path, "w") as file:
+                json.dump(self.json_file, file, indent=2)
+            print("Nowe słowa zostały dodane do pliku json")
+        except FileNotFoundError:
+            print(f"Plik {self.path} nie istnieje!")
+        file.close()
+
+    def deleteWordFromDictionary(self):
+        self.getWordsToBeDeleted()
         try:
             with open(self.path, "w") as file:
                 json.dump(self.json_file, file, indent=2)
@@ -100,6 +121,7 @@ def category_menu(new_words, dictionary_json):
             '''1. Wyswietl dostepne slowa
 2. Testuj swoja wiedze
 3. Dodaj nowe słowo i tłumaczenie
+4. Usun slowo
 X. Zmień kategorię''')
         user_input = input("Podaj co chcesz zrobić: ")
         if user_input == "1":
@@ -108,6 +130,8 @@ X. Zmień kategorię''')
             new_words.testKnowledge()
         elif user_input == "3":
             dictionary_json.addNewWordAndTranslationToJson()
+        elif user_input == "4":
+            dictionary_json.deleteWordFromDictionary()
         elif user_input.lower() == "x":
             break
         else:
