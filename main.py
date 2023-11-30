@@ -50,6 +50,11 @@ class Json_Operations:
                 json.dump({}, file, indent=2)
                 return {}
 
+    def getWords(self):
+        while True:
+            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            return new_word
+
     def getWordsToBeAdded(self):
         while True:
             new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
@@ -69,8 +74,7 @@ class Json_Operations:
             else:
                 print(f"Slowa {new_word} nie ma w slowniku!")
 
-    def addNewWordAndTranslationToJson(self):
-        self.getWordsToBeAdded()
+    def updateJsonFile(self):
         try:
             with open(self.path, "w") as file:
                 json.dump(self.json_file, file, indent=2)
@@ -79,15 +83,13 @@ class Json_Operations:
             print(f"Plik {self.path} nie istnieje!")
         file.close()
 
+    def addNewWordAndTranslationToJson(self):
+        self.getWordsToBeAdded()
+        self.updateJsonFile()
+
     def deleteWordFromDictionary(self):
         self.getWordsToBeDeleted()
-        try:
-            with open(self.path, "w") as file:
-                json.dump(self.json_file, file, indent=2)
-            print("Nowe słowa zostały dodane do pliku json")
-        except FileNotFoundError:
-            print(f"Plik {self.path} nie istnieje!")
-        file.close()
+        self.updateJsonFile()
 
 
 def choose_category():
