@@ -3,7 +3,7 @@ import random
 import os
 
 
-class Words:
+class Tests:
     def __init__(self, words: dict):
         self.words = words
 
@@ -36,7 +36,7 @@ class Words:
             print("Odpowiedziałeś 10 razy źle! Zacznij do nowa!")
 
 
-class Json_Operations:
+class Json_Operations():
     def __init__(self, category_file="default_dictionary.json"):
         self.path = os.path.join(os.getcwd(), "dictionaries", category_file)
         self.json_file = self.getParsedDataFromJsonFile()
@@ -50,14 +50,24 @@ class Json_Operations:
                 json.dump({}, file, indent=2)
                 return {}
 
-    def getWords(self):
+    @staticmethod
+    def getWords():
         while True:
-            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            new_word = input("Podaj słowo (\"exit\" konczy pobieranie słów): ")
             return new_word
+
+    def updateJsonFile(self):
+        try:
+            with open(self.path, "w") as file:
+                json.dump(self.json_file, file, indent=2)
+            print("Slownik został zaktualizowany!")
+        except FileNotFoundError:
+            print(f"Plik {self.path} nie istnieje!")
+        file.close()
 
     def getWordsToBeAdded(self):
         while True:
-            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            new_word = self.getWords()
             if new_word.lower() == "exit":
                 break
             new_translation = input("Podaj tlumaczenie: ")
@@ -65,7 +75,7 @@ class Json_Operations:
 
     def getWordsToBeDeleted(self):
         while True:
-            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            new_word = self.getWords()
             if new_word.lower() == "exit":
                 break
             if new_word in self.json_file:
@@ -73,15 +83,6 @@ class Json_Operations:
                 print(f"Slowo {new_word} zostało usunięte!")
             else:
                 print(f"Slowa {new_word} nie ma w slowniku!")
-
-    def updateJsonFile(self):
-        try:
-            with open(self.path, "w") as file:
-                json.dump(self.json_file, file, indent=2)
-            print("Nowe słowa zostały dodane do pliku json")
-        except FileNotFoundError:
-            print(f"Plik {self.path} nie istnieje!")
-        file.close()
 
     def addNewWordAndTranslationToJson(self):
         self.getWordsToBeAdded()
@@ -105,7 +106,7 @@ def choose_category():
 
         if "1" <= category_input <= f"{len(categories)}":
             dictionary_json = Json_Operations(categories[int(category_input) - 1])
-            new_words = Words(dictionary_json.json_file)
+            new_words = Tests(dictionary_json.json_file)
             category_menu(new_words, dictionary_json)
         elif category_input == "0":
             new_category_name = input("Podaj nazwę kategorii: ")
