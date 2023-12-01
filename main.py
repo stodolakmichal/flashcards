@@ -52,9 +52,8 @@ class Json_Operations:
 
     @staticmethod
     def getWords():
-        while True:
-            new_word = input("Podaj słowo (\"exit\" konczy pobieranie słów): ")
-            return new_word
+        new_word = input("Podaj słowo (\"exit\" konczy pobieranie słów): ")
+        return new_word
 
     def updateJsonFile(self):
         try:

@@ -55,11 +55,14 @@ def test_getWordsToBeAdded_exit(Json_Operations_instance):
         Json_Operations_instance.getWordsToBeAdded()
 
 
-def test_getWords():
-    # TODO
-    pass
+@pytest.mark.parametrize("side_effects", [("1st_word", "2nd_word", "3rd_word")])
+def test_getWords(Json_Operations_instance, side_effects):
+    returned_words = []
+    with patch('builtins.input', side_effect=side_effects):
+        for _ in side_effects:
+            returned_words.append(Json_Operations_instance.getWords())
+    assert returned_words == list(side_effects)
 
-
-def test_updateJsonFile():
-    # TODO
-    pass
+    def test_updateJsonFile():
+        # TODO
+        pass
