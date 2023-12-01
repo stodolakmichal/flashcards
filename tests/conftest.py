@@ -1,7 +1,7 @@
 import os
 from io import StringIO
 from unittest.mock import patch
-from main import Words
+from main import Tests
 from main import Json_Operations
 
 import pytest
@@ -16,7 +16,7 @@ def patched_json():
 @pytest.fixture
 def words_instance(patched_json):
     with patch("main.open", return_value=StringIO()):
-        yield Words(patched_json)
+        yield Tests(patched_json)
 
 
 @pytest.fixture

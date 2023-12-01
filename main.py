@@ -3,7 +3,7 @@ import random
 import os
 
 
-class Words:
+class Tests:
     def __init__(self, words: dict):
         self.words = words
 
@@ -50,9 +50,23 @@ class Json_Operations:
                 json.dump({}, file, indent=2)
                 return {}
 
+    @staticmethod
+    def getWords():
+        new_word = input("Podaj słowo (\"exit\" konczy pobieranie słów): ")
+        return new_word
+
+    def updateJsonFile(self):
+        try:
+            with open(self.path, "w") as file:
+                json.dump(self.json_file, file, indent=2)
+            print("Slownik został zaktualizowany!")
+        except FileNotFoundError:
+            print(f"Plik {self.path} nie istnieje!")
+        file.close()
+
     def getWordsToBeAdded(self):
         while True:
-            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            new_word = self.getWords()
             if new_word.lower() == "exit":
                 break
             new_translation = input("Podaj tlumaczenie: ")
@@ -60,7 +74,7 @@ class Json_Operations:
 
     def getWordsToBeDeleted(self):
         while True:
-            new_word = input("Podaj słowo (exit konczy dodawanie slow): ")
+            new_word = self.getWords()
             if new_word.lower() == "exit":
                 break
             if new_word in self.json_file:
@@ -71,23 +85,11 @@ class Json_Operations:
 
     def addNewWordAndTranslationToJson(self):
         self.getWordsToBeAdded()
-        try:
-            with open(self.path, "w") as file:
-                json.dump(self.json_file, file, indent=2)
-            print("Nowe słowa zostały dodane do pliku json")
-        except FileNotFoundError:
-            print(f"Plik {self.path} nie istnieje!")
-        file.close()
+        self.updateJsonFile()
 
     def deleteWordFromDictionary(self):
         self.getWordsToBeDeleted()
-        try:
-            with open(self.path, "w") as file:
-                json.dump(self.json_file, file, indent=2)
-            print("Nowe słowa zostały dodane do pliku json")
-        except FileNotFoundError:
-            print(f"Plik {self.path} nie istnieje!")
-        file.close()
+        self.updateJsonFile()
 
 
 def choose_category():
@@ -103,7 +105,7 @@ def choose_category():
 
         if "1" <= category_input <= f"{len(categories)}":
             dictionary_json = Json_Operations(categories[int(category_input) - 1])
-            new_words = Words(dictionary_json.json_file)
+            new_words = Tests(dictionary_json.json_file)
             category_menu(new_words, dictionary_json)
         elif category_input == "0":
             new_category_name = input("Podaj nazwę kategorii: ")
