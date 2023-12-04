@@ -1,5 +1,6 @@
 import json
 import os
+from modules.interrupts import Interrupts
 
 
 class Json_Operations:
@@ -33,7 +34,7 @@ class Json_Operations:
     def getWordsToBeAdded(self):
         while True:
             new_word = self.getWords()
-            if new_word.lower() == "exit":
+            if Interrupts.exit(new_word):
                 break
             new_translation = input("Podaj tlumaczenie: ")
             self.json_file[new_word] = new_translation
@@ -41,7 +42,7 @@ class Json_Operations:
     def getWordsToBeDeleted(self):
         while True:
             new_word = self.getWords()
-            if new_word.lower() == "exit":
+            if Interrupts.exit(new_word):
                 break
             if new_word in self.json_file:
                 del self.json_file[new_word]

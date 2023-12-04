@@ -1,6 +1,7 @@
 import os
-from modules.tests import Tests
 from modules.json_Operations import Json_Operations
+from modules.tests import Tests
+from modules.interrupts import Interrupts
 
 
 class Menu:
@@ -45,6 +46,8 @@ X. Zmień kategorię''')
                 cls.category_menu(new_words, dictionary_json)
             elif category_input == "0":
                 new_category_name = input("Podaj nazwę kategorii: ")
+                if Interrupts.exit(new_category_name):
+                    print("Anulowano dodawanie kategorii")
                 Json_Operations(f"{new_category_name}.json")
             elif category_input.lower() == "x":
                 print("Nauka zakończona")
