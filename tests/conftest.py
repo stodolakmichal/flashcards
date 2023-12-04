@@ -1,8 +1,8 @@
 import os
 from io import StringIO
 from unittest.mock import patch
-from main import Tests
-from main import Json_Operations
+from modules.tests import Tests
+from modules.json_Operations import Json_Operations
 
 import pytest
 
