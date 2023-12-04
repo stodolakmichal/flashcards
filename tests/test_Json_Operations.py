@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from main import Json_Operations
+from modules.json_Operations import Json_Operations
 from unittest.mock import patch
 
 
