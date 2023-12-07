@@ -1,15 +1,17 @@
 import random
-
+from modules.my_decorators import dashes_before_after_text
 
 class Tests:
     def __init__(self, words: dict):
         self.words = words
 
+    @dashes_before_after_text
     def displayWords(self):
         """Opcja 1 - Wyswietlanie zawartosci slownika"""
         for word, translation in self.words.items():
             print(f"{word} - {translation}")
 
+    @dashes_before_after_text
     def testKnowledge(self):
         """Opcja 2 - Sprawdzanie wiedzy.
         Jesli odpowiedz jest poprawna, zmniejsza się counter i slowo jest usuwane ze slownika
@@ -30,5 +32,6 @@ class Tests:
             else:
                 print(f"Źle! Poprawnie: {random_word} - {random_translation}")
                 wrong_answers_counter += 1
+            #TODO print(f"Złych odpowiedzi: {wrong_answers_counter}")
         if wrong_answers_counter == 10:
             print("Odpowiedziałeś 10 razy źle! Zacznij do nowa!")

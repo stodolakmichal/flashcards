@@ -1,4 +1,7 @@
 from unittest.mock import patch
+import os
+
+os.environ["ENABLE_DECORATOR"] = "False"
 
 
 def test_displayWords(words_instance, capsys):

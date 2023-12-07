@@ -18,7 +18,7 @@ X. Zmień kategorię''')
             if user_input == "1":
                 new_words.displayWords()
             elif user_input == "2":
-                new_words.testKnowledge()
+                new_words.testKnowledge(pre_pause_text="TEST WIEDZY", post_pause_text="KONIEC TESTU")
             elif user_input == "3":
                 dictionary_json.addNewWordAndTranslationToJson()
             elif user_input == "4":
